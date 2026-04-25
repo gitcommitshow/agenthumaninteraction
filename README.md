@@ -65,11 +65,11 @@ The public site lives in [`site/`](site/) (**Astro Starlight**, MIT). It include
 
 1. In the GitHub repo: **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**.
 2. The workflow [`.github/workflows/deploy-site.yml`](.github/workflows/deploy-site.yml) runs on pushes to `main` when `site/`, `docs/`, or that workflow file changes.
-3. Default workflow env targets a **project site** URL shape (`PUBLIC_SITE_URL=https://gitcommitshow.github.io`, `ASTRO_BASE=/agenthumaninteraction/`). Forks should update those values.
+3. The workflow sets `PUBLIC_SITE_URL` (defaults in [`site/astro.config.mjs`](site/astro.config.mjs) to root `base: /`, so assets load at `/_astro/...`—correct for a **custom domain** on GitHub Pages). If you use the `https://<user>.github.io/<repo>/` URL *without* a custom domain, add a Build `env` entry in the workflow: `ASTRO_BASE: /<repo>/` (e.g. `ASTRO_BASE: /agenthumaninteraction/`).
 
 ### Custom domain
 
-When you move to your own hostname, set `PUBLIC_SITE_URL` to `https://your.domain` and `ASTRO_BASE` to `/` in the workflow (or via repository / environment variables), then add `site/public/CNAME` containing **exactly one line**: the hostname (no `https://`). See [`site/cname.example.txt`](site/cname.example.txt). Avoid committing a real `CNAME` until DNS is ready—an incorrect value can confuse the Pages custom-domain setting.
+Set `PUBLIC_SITE_URL` in the workflow Build step to `https://your.domain` (or rely on a matching default in `astro.config.mjs` if you already align them). The default `base` is `/` so no `ASTRO_BASE` is required. Add `site/public/CNAME` containing **exactly one line**: the hostname (no `https://`). See [`site/cname.example.txt`](site/cname.example.txt). Avoid committing a real `CNAME` until DNS is ready—an incorrect value can confuse the Pages custom-domain setting.
 
 ### Live site (after Pages is enabled)
 
