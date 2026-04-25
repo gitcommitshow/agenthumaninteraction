@@ -6,11 +6,27 @@ import starlight from '@astrojs/starlight';
  * Defaults target GitHub Pages project site. Override with env when using a custom domain:
  * - PUBLIC_SITE_URL=https://your.domain
  * - ASTRO_BASE=/
+ *
+ * Base path must match where static files are served. Do not use NODE_ENV alone: `astro build`
+ * often runs without NODE_ENV=production, which previously forced base to `/` and caused 404s
+ * for all hashed assets on a project page (e.g. /agenthumaninteraction/).
  */
 const site = process.env.PUBLIC_SITE_URL ?? 'https://gitcommitshow.github.io';
-const base =
-  process.env.ASTRO_BASE ??
-  (process.env.NODE_ENV === 'production' ? '/agenthumaninteraction/' : '/');
+
+/** @returns {string} */
+function resolveBase() {
+  if (process.env.ASTRO_BASE) {
+    return process.env.ASTRO_BASE;
+  }
+  // `astro dev` only — keep localhost at / for convenience. All other CLIs (build, preview, etc.) use the Pages path.
+  const subcommand = process.argv[2];
+  if (subcommand === 'dev' || process.env.npm_lifecycle_event === 'dev') {
+    return '/';
+  }
+  return '/agenthumaninteraction/';
+}
+
+const base = resolveBase();
 
 // https://astro.build/config
 export default defineConfig({
