@@ -1,0 +1,11 @@
+# GitHub Pages custom domain (optional)
+#
+# When you attach a custom domain in the repo Settings → Pages:
+# 1. Create a file at site/public/CNAME (no extension).
+# 2. Put exactly one line in it: your DNS hostname (e.g. docs.example.com).
+# 3. Point DNS for that hostname to GitHub Pages as documented by GitHub.
+#
+# Do not commit a CNAME file until DNS is ready; an incorrect hostname can
+# confuse the Pages "custom domain" setting for the default github.io URL.
+
+docs.example.com

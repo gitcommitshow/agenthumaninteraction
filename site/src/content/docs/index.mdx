@@ -1,0 +1,103 @@
+---
+title: HumanInteraction
+description: >-
+  A practical framework to standardize how agents and humans collaborate and share accountability
+  across chat, email, and UI.
+template: splash
+slug: index
+hero:
+  title: Human Interaction Protocol
+  tagline: A protocol for accountable agent–human collaboration
+  actions:
+    - text: Read the protocol spec
+      link: /docs/protocol/
+      icon: right-arrow
+      variant: primary
+    - text: Read the design deep dive
+      link: /docs/design/
+      icon: right-arrow
+      variant: secondary
+editUrl: https://github.com/gitcommitshow/agenthumaninteraction/edit/main/site/src/content/docs/index.mdx
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## When agents get it wrong, who is accountable?
+
+AI agents are making real decisions in real workflows. Mistakes are inevitable. Without a shared interaction standard, it’s unclear:
+
+- **Who is responsible** for approving, correcting, or owning an outcome
+- **What exactly is being asked** (decision vs approval vs clarification) and what “done” means
+- **How to audit** what happened later (who said what, when, and why)
+
+`HumanInteraction` is a practical protocol that standardizes **how agents ask humans for input** and **how humans respond**, so teams can collaborate with clarity and share accountability.
+
+## What we explore
+
+- **Teamwork**: why effective agents require humans and AI working together as a team
+- **Accountability**: how to track AI actions and tie outcomes back to responsible human decisions
+- **Human factors**: why interaction design must acknowledge fatigue/overload and usability/security considerations (as NIST recommends)
+- **Examples**: how a shared protocol enables smooth, transparent interactions across stakeholders and channels
+
+## Core concepts
+
+<CardGrid>
+  <Card title="HumanInteraction">
+    The agent’s structured request for human involvement (who / what / why), including constraints and context.
+  </Card>
+  <Card title="HumanFeedback">
+    The human response that resolves (or partially resolves) an interaction, linked for auditability.
+  </Card>
+  <Card title="Expectation vs commitment">
+    Soft asks vs binding promises. Commitments require explicit acknowledgement and can carry due dates and consequences.
+  </Card>
+  <Card title="Resolution policy">
+    How multi-party inputs resolve—e.g. first response, majority, or all required actors.
+  </Card>
+  <Card title="Coordination mode">
+    Centralized vs distributed handling when several humans participate (with optional `groupId` linking).
+  </Card>
+  <Card title="Roles">
+    Primary, approver, contributor, observer—plus private vs group visibility when messages fan out.
+  </Card>
+</CardGrid>
+
+## Example message
+
+Structured JSON keeps LLM generation simple and tooling interoperable:
+
+```json
+{
+  "interactionId": "abc123",
+  "groupId": "grp789",
+  "coordinationMode": "centralized",
+  "resolutionPolicy": "majority",
+  "timestamp": "2025-06-24T10:00:00Z",
+  "agentInstanceId": "agent-XZ01:exec-5589",
+  "participants": [
+    { "id": "user-108", "role": "compliance_analyst" },
+    { "id": "user-222", "role": "finance_approver" }
+  ],
+  "agentOutput": {
+    "summary": "This invoice exceeds the threshold.",
+    "confidence": 0.62
+  },
+  "type": "approval",
+  "urgency": "blocking",
+  "userActions": ["approve", "edit", "reject", "submit_text"],
+  "status": "awaiting_input",
+  "humanFactors": {
+    "trustLevel": 0.8,
+    "fatigueScore": 0.2
+  },
+  "history": []
+}
+```
+
+## Status
+
+This protocol and its design docs are an **evolving draft**—naming and schema details may change as requirements and examples converge. Read the [design deep dive](/docs/design/) for scope, requirements, and edge cases.
+
+---
+
+**Next:** [Protocol specification](/docs/protocol/) · [Design deep dive](/docs/design/) · [Contributing](/docs/contributing/)

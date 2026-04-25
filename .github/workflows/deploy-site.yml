@@ -1,0 +1,55 @@
+# Builds the Starlight site in `site/` and publishes to GitHub Pages.
+# Set repository Settings → Pages → Source: GitHub Actions.
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'docs/**'
+      - '.github/workflows/deploy-site.yml'
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: site/package.json
+      - name: Install dependencies
+        working-directory: site
+        run: npm install
+      - name: Build
+        working-directory: site
+        env:
+          PUBLIC_SITE_URL: https://gitcommitshow.github.io
+          ASTRO_BASE: /agenthumaninteraction/
+        run: npm run build
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,123 @@
+/**
+ * Site-wide typography and accent tokens (HumanInteraction public site).
+ */
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource/jetbrains-mono/400.css';
+
+:root {
+  --sl-font: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /**
+   * Greyscale-only palette (shadcn-inspired).
+   * Keep everything pleasant for long-form reading.
+   */
+  --sl-color-accent-low: #00000010;
+  --sl-color-accent: #111827; /* neutral "foreground" used for links/buttons */
+  --sl-color-accent-high: #00000030;
+}
+
+/**
+ * Prefer greyscale links (avoid "blue link" noise).
+ * Keep underline for discoverability.
+ */
+:root a {
+  color: inherit;
+  text-decoration-color: rgba(17, 24, 39, 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+:root a:hover {
+  text-decoration-color: rgba(17, 24, 39, 0.7);
+}
+
+/**
+ * Softer inline code + code blocks (no colored emphasis).
+ */
+:root :not(pre) > code {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/**
+ * Subtle card borders on the splash page.
+ */
+:root .sl-card {
+  border-color: rgba(0, 0, 0, 0.10);
+}
+
+/**
+ * Splash CTAs: Starlight sets `data-theme` on `html` (light | dark). Primary must read as the
+ * main action in both; secondary stays outline and subordinate (not bright white on dark).
+ */
+html[data-theme='light'] .sl-link-button.primary,
+html[data-theme='light'] .sl-link-button[data-variant='primary'] {
+  background: #111827;
+  color: #ffffff;
+  border-color: transparent;
+  font-weight: 600;
+  padding-block: 0.65rem;
+  padding-inline: 1.2rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme='light'] .sl-link-button.primary:hover,
+html[data-theme='light'] .sl-link-button[data-variant='primary']:hover {
+  background: #0b1220;
+}
+
+/** Dark hero: primary = light solid (dominant); secondary = low-contrast outline. */
+html[data-theme='dark'] .sl-link-button.primary,
+html[data-theme='dark'] .sl-link-button[data-variant='primary'] {
+  background: #f4f4f5;
+  color: #111827;
+  border-color: transparent;
+  font-weight: 600;
+  padding-block: 0.65rem;
+  padding-inline: 1.2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme='dark'] .sl-link-button.primary:hover,
+html[data-theme='dark'] .sl-link-button[data-variant='primary']:hover {
+  background: #ffffff;
+}
+
+html[data-theme='light'] .sl-link-button.secondary,
+html[data-theme='light'] .sl-link-button[data-variant='secondary'] {
+  background: transparent;
+  color: #374151;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  font-weight: 500;
+  box-shadow: none;
+}
+
+html[data-theme='light'] .sl-link-button.secondary:hover,
+html[data-theme='light'] .sl-link-button[data-variant='secondary']:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #111827;
+  border-color: rgba(0, 0, 0, 0.32);
+}
+
+html[data-theme='dark'] .sl-link-button.secondary,
+html[data-theme='dark'] .sl-link-button[data-variant='secondary'] {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-weight: 500;
+  box-shadow: none;
+}
+
+html[data-theme='dark'] .sl-link-button.secondary:hover,
+html[data-theme='dark'] .sl-link-button[data-variant='secondary']:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.82);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+:root .sl-link-button.minimal,
+:root .sl-link-button[data-variant='minimal'] {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
