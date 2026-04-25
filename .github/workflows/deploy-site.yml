@@ -32,11 +32,12 @@ jobs:
       - name: Install dependencies
         working-directory: site
         run: npm install
+      # `ASTRO_BASE` is not set here so `astro.config.mjs` defaults to `/` (correct for a custom root domain).
+      # For the default `https://<user>.github.io/<repo>/` URL, add: env: ASTRO_BASE: /agenthumaninteraction/
       - name: Build
         working-directory: site
         env:
           PUBLIC_SITE_URL: https://gitcommitshow.github.io
-          ASTRO_BASE: /agenthumaninteraction/
         run: npm run build
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
