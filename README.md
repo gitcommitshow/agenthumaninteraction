@@ -1,4 +1,4 @@
-# Agent Human Interaction Protocol (`HumanInteraction`)
+# Human Interaction Protocol for Agents
 
 This repository is the home for the **Agent–Human Interaction protocol documentation**: a structured, channel-agnostic way for agents (LLM “thinking layers”) to express **what they need from humans**—who should receive what, what’s expected, constraints, and the context needed to respond—while supporting **auditability, privacy, and multi-party collaboration**.
 
